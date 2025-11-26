@@ -1,0 +1,367 @@
+/* Wellness Tools Page Styles */
+
+.wellness-wrapper {
+  position: relative;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: white;/*linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+  overflow: hidden;
+}
+
+.wellness-background-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%), 
+              radial-gradient(circle at 80% 80%, rgba(255, 212, 0, 0.15), transparent 50%);
+  z-index: 0;
+}
+
+.wellness-nav-wrap {
+  position: relative;
+  z-index: 10;
+  padding: 24px 40px;
+}
+
+.wellness-nav-bar {
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 16px 32px;
+  display: flex;
+  gap: 42px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.wellness-nav-item {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.wellness-nav-item:hover {
+  background: #f1f5f9;
+}
+
+.wellness-nav-item-active {
+  background: #ffd400;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(255, 212, 0, 0.4);
+}
+
+.wellness-main {
+  position: relative;
+  z-index: 1;
+  padding: 0 40px 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.wellness-content-card {
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 56px;
+  width: 100%;
+  max-width: 1400px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
+.wellness-header-section {
+  margin-bottom: 56px;
+}
+
+.wellness-main-title {
+  font-size: 52px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.wellness-section {
+  margin-bottom: 64px;
+}
+
+.wellness-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wellness-section-header-with-arrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.wellness-section-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.wellness-journal-btn {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+}
+
+.wellness-journal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.35);
+}
+
+.wellness-arrow-btn {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 14px;
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #0f172a;
+}
+
+.wellness-arrow-btn:hover {
+  background: #e2e8f0;
+  transform: translateX(4px);
+}
+
+.wellness-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.wellness-video-card {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.wellness-video-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
+  border-color: #667eea;
+}
+
+.wellness-video-card:hover .wellness-play-overlay {
+  opacity: 1;
+}
+
+.wellness-video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wellness-thumbnail-emoji {
+  font-size: 64px;
+}
+
+.wellness-play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wellness-video-info {
+  padding: 22px;
+  background: #f8fafc;
+}
+
+.wellness-video-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+}
+
+.wellness-video-duration {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+.wellness-journal-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+  backdrop-filter: blur(4px);
+}
+
+.wellness-journal-content {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 40px;
+  width: 100%;
+  max-width: 750px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.wellness-journal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.wellness-journal-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.wellness-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 38px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.wellness-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.wellness-journal-textarea {
+  width: 100%;
+  min-height: 320px;
+  padding: 24px;
+  font-size: 16px;
+  line-height: 1.7;
+  font-family: Inter, system-ui, sans-serif;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  resize: vertical;
+  margin-bottom: 24px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+.wellness-journal-textarea:focus {
+  border-color: #667eea;
+  background: #ffffff;
+}
+
+.wellness-save-btn {
+  background: #ffd400;
+  color: #0f172a;
+  border: none;
+  border-radius: 16px;
+  padding: 18px 36px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 212, 0, 0.4);
+}
+
+.wellness-save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 212, 0, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .wellness-video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  
+  .wellness-content-card {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wellness-main-title {
+    font-size: 36px;
+  }
+  
+  .wellness-section-title {
+    font-size: 26px;
+  }
+  
+  .wellness-nav-bar {
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 12px 20px;
+  }
+  
+  .wellness-content-card {
+    padding: 28px;
+    border-radius: 24px;
+  }
+  
+  .wellness-video-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .wellness-main {
+    padding: 0 20px 60px;
+  }
+  
+  .wellness-nav-wrap {
+    padding: 16px 20px;
+  }
+}

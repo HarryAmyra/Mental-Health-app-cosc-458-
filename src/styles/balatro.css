@@ -1,0 +1,8 @@
+.balatro-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;  /* push behind */
+  pointer-events: none; /* optional */
+}
