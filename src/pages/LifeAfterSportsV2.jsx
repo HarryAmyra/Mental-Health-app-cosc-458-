@@ -1,4 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import Balatro from "./Balatro";
 
 export default function LifeAfterSportsV2({ bgUrl = "/bg/life-after-sports-bg.png" }) {
   const [activePath, setActivePath] = useState("Career switch");
@@ -10,24 +12,38 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/life-after-sports-bg.pn
     return () => clearInterval(id);
   }, []);
 
+  const getNavPath = (label) => {
+    const pathMap = {
+      "Home": "/",
+      "About us": "/about",
+      "Wellness tools": "/wellnessTools",
+      "Life After Sports": "/life-after-sports",
+      "Community": "/community"
+    };
+    return pathMap[label] || "/";
+  };
+
   return (
     <div style={styles.wrapper}>
+      {/* Animated Background */}
+      <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
+      
       <div style={{ ...styles.backdrop, backgroundImage: `url(${background})` }} />
       <div style={styles.overlay} />
 
       <header style={styles.navWrap}>
         <nav style={styles.navBar}>
           {NAV.map((label) => (
-            <a
+            <Link
               key={label}
-              href="#"
+              to={getNavPath(label)}
               style={{
                 ...styles.navItem,
                 ...(label === "Life After Sports" ? styles.navItemActive : {}),
               }}
             >
               {label}
-            </a>
+            </Link>
           ))}
         </nav>
       </header>
@@ -111,7 +127,7 @@ const NAV = ["Home", "About us", "Wellness tools", "Life After Sports", "Communi
 const PILLS = ["Career switch", "Start a business", "Finish degree", "Find purpose"];
 const CARDS = [
   { title: "Job Board", body: "Curated roles from athlete‑friendly employers." },
-  { title: "Mentorship", body: "Chat with alumni who’ve made the leap." },
+  { title: "Mentorship", body: "Chat with alumni who've made the leap." },
   { title: "Courses", body: "Short upskilling tracks & certifications." },
   { title: "Money & Health", body: "Budgeting, benefits, and wellbeing care." },
 ];
