@@ -1,37 +1,59 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LifeAfterSportsV2 from './pages/LifeAfterSportsV2.jsx';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/home.jsx";
+import WellnessTools from "./pages/wellnessTools.jsx";
+import Community from "./pages/community.jsx";
+import LifeAfterSportsV2 from "./pages/LifeAfterSportsV2.jsx";
+import ChatPage from "./pages/ChatPage.jsx";
+import Login from "./pages/login.jsx";
+import Register from "./pages/register.jsx";
+import About from "./pages/about.jsx";
+import CrisisSupport from "./pages/CrisisSupport.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
 
-export default App
+      <Route
+        path="/wellness-tools"
+        element={
+          <ProtectedRoute>
+            <WellnessTools />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/community"
+        element={
+          <ProtectedRoute>
+            <Community />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/life-after-sports"
+        element={
+          <ProtectedRoute>
+            <LifeAfterSportsV2 />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <ChatPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="/crisis-support" element={<CrisisSupport />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
+  );
+}

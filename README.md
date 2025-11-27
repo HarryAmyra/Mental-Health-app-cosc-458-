@@ -1,26 +1,65 @@
-# React + Vite
+# Healing Minds – Auth + Firestore + Crisis Support + Global Chat Button
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite + React frontend, Express + LangChain + OpenAI backend, Firebase Auth + Firestore.
 
-Currently, two official plugins are available:
+Key extras in this version:
+- Global floating Chat button on every page.
+- Added Account Feature from firebase.
+- Logout button in the nav when signed in.
+- Chat page shows a greeting message using the logged-in user's name.
+- Chat and journal entries are saved per user in Firestore.
+- Crisis support page is public and linked from chat.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Install dependencies
 
-## React Compiler
+From project root:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+cd server
+npm install
+cd ..
+```
 
-## Expanding the ESLint configuration
+(Use the same commands in PowerShell.)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Configure Firebase
 
+In `src/config/firebaseClient.js`, replace the placeholder values with your Firebase web config.
+(currently using a dup db)
+Enable in Firebase console:
+- **Authentication → Email/Password**
+- **Firestore Database**
 
-## Life After Sports (V2) page
+## Configure OpenAI (optional)
 
-- Component: `src/pages/LifeAfterSportsV2.jsx`
-- Background: `public/bg/life-after-sports-bg.png`
-- Route: `/life-after-sports`
+Create `.env` in the project root:
 
-If the app already used React Router, a route was auto-inserted.
-A backup of `src/App.jsx` was created as `src/App.jsx.bak`.
+```env
+OPENAI_API_KEY=sk-xxxxx
+PORT=5000
+```
+
+If you skip this, the chat still responds with a demo message from the server.
+
+## Run the app
+
+Backend (in one terminal):
+
+```bash
+npm run dev:server
+```
+
+Frontend (in another terminal):
+
+```bash
+npm run dev
+```
+
+Open the URL Vite prints (usually http://localhost:5173).
+
+If you see an error in the chat like
+“Something went wrong talking to the chat server…”
+check that:
+1. `npm run dev:server` is running, and
+2. your `OPENAI_API_KEY` (if provided) is valid.
