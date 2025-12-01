@@ -1,37 +1,76 @@
 /* Wellness Tools Page Styles */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .wellness-wrapper {
   position: relative;
   min-height: 100vh;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: white;/*linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
-  overflow: hidden;
+  width: 100%;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+  padding-left: 200px;   /* <-- add left spacing */
+  padding-right: 200px;  /* <-- add right spacing */
 }
 
+
+/* Balatro canvas goes behind everything */
+.wellness-bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Soft radial overlay */
 .wellness-background-overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%), 
-              radial-gradient(circle at 80% 80%, rgba(255, 212, 0, 0.15), transparent 50%);
-  z-index: 0;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(120, 119, 198, 0.3),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 212, 0, 0.15),
+      transparent 50%
+    );
+  z-index: -1;
 }
 
+/* ------- NAVBAR (fixed at top) ------- */
+
 .wellness-nav-wrap {
-  position: relative;
-  z-index: 10;
-  padding: 24px 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
 }
 
 .wellness-nav-bar {
   background: #ffffff;
   border-radius: 999px;
-  padding: 16px 32px;
+  padding: 12px 32px;
   display: flex;
   gap: 42px;
   align-items: center;
   justify-content: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(10px);
+  max-width: 1200px;
+  width: calc(100% - 40px);
 }
 
 .wellness-nav-item {
@@ -39,7 +78,7 @@
   font-weight: 700;
   font-size: 15px;
   text-decoration: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border-radius: 999px;
   transition: all 0.2s ease;
 }
@@ -49,34 +88,35 @@
 }
 
 .wellness-nav-item-active {
-  background: #ffd400;
+  background: #ffd93d;
   color: #0f172a;
-  box-shadow: 0 4px 12px rgba(255, 212, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(255, 217, 61, 0.4);
 }
 
-.wellness-main {
-  position: relative;
-  z-index: 1;
-  padding: 0 40px 80px;
-  display: flex;
-  justify-content: center;
-}
+/* ------- MAIN CONTENT CARD (centered, responsive) ------- */
 
 .wellness-content-card {
-  background: #ffffff;
-  border-radius: 32px;
-  padding: 56px;
-  width: 100%;
-  max-width: 1400px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+  position: relative;
+  max-width: 1200px;              /* good width for laptop + desktop */
+  width: calc(100% - 40px);       /* 20px gutter on each side on small screens */
+  margin: 140px auto 150px;       /* sits under navbar & centered horizontally */
+  padding: 60px;
+  background-color: rgba(255, 255, 255, 0.97);
+  border-radius: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  box-sizing: border-box;
 }
+
+/* ------- TEXT / SECTIONS ------- */
 
 .wellness-header-section {
   margin-bottom: 56px;
+  text-align: center;
 }
 
 .wellness-main-title {
-  font-size: 52px;
+  font-size: 3rem;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
@@ -88,7 +128,8 @@
   margin-bottom: 64px;
 }
 
-.wellness-section-header {
+.wellness-section-header,
+.wellness-section-header-with-arrow {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,20 +138,15 @@
   gap: 16px;
 }
 
-.wellness-section-header-with-arrow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
 .wellness-section-title {
-  font-size: 34px;
+  font-size: 2.1rem;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
   letter-spacing: -0.02em;
 }
+
+/* ------- Buttons ------- */
 
 .wellness-journal-btn {
   background: #0f172a;
@@ -151,10 +187,13 @@
   transform: translateX(4px);
 }
 
+/* ------- Video grid / cards ------- */
+
 .wellness-video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
   gap: 28px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .wellness-video-card {
@@ -165,12 +204,14 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid #e2e8f0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex: 0 0 calc(25% - 21px);
+  min-width: 280px;
 }
 
 .wellness-video-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
-  border-color: #667eea;
+  box-shadow: 0 12px 40px rgba(74, 144, 226, 0.25);
+  border-color: #4a90e2;
 }
 
 .wellness-video-card:hover .wellness-play-overlay {
@@ -181,7 +222,7 @@
   position: relative;
   width: 100%;
   height: 200px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -223,6 +264,8 @@
   margin: 0;
 }
 
+/* ------- Journal modal ------- */
+
 .wellness-journal-modal {
   position: fixed;
   inset: 0;
@@ -230,7 +273,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2000;
   padding: 24px;
   backdrop-filter: blur(4px);
 }
@@ -286,7 +329,7 @@
   padding: 24px;
   font-size: 16px;
   line-height: 1.7;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
   border: 2px solid #e2e8f0;
   border-radius: 20px;
   resize: vertical;
@@ -298,12 +341,12 @@
 }
 
 .wellness-journal-textarea:focus {
-  border-color: #667eea;
+  border-color: #4a90e2;
   background: #ffffff;
 }
 
 .wellness-save-btn {
-  background: #ffd400;
+  background: #ffd93d;
   color: #0f172a;
   border: none;
   border-radius: 16px;
@@ -313,55 +356,74 @@
   cursor: pointer;
   width: 100%;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(255, 212, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 217, 61, 0.4);
 }
 
 .wellness-save-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 212, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(255, 217, 61, 0.5);
 }
 
-/* Responsive Design */
+/* ------- Responsive ------- */
+
 @media (max-width: 1200px) {
-  .wellness-video-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  .wellness-video-card {
+    flex: 0 0 calc(33.333% - 18.67px);
+    min-width: 240px;
   }
-  
+
   .wellness-content-card {
-    padding: 40px;
+    padding: 40px 50px;
+    width: calc(100% - 60px);
+    margin: 130px auto 120px;
   }
 }
 
 @media (max-width: 768px) {
-  .wellness-main-title {
-    font-size: 36px;
-  }
-  
-  .wellness-section-title {
-    font-size: 26px;
-  }
-  
   .wellness-nav-bar {
     gap: 20px;
     flex-wrap: wrap;
-    padding: 12px 20px;
+    padding: 10px 20px;
   }
-  
+
   .wellness-content-card {
-    padding: 28px;
+    margin: 100px 20px 40px;
+    padding: 30px 20px;
     border-radius: 24px;
+    width: calc(100% - 40px);
   }
-  
+
+  .wellness-main-title {
+    font-size: 2.2rem;
+  }
+
+  .wellness-section-title {
+    font-size: 1.7rem;
+  }
+
   .wellness-video-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    overflow-x: auto;
   }
-  
-  .wellness-main {
-    padding: 0 20px 60px;
+
+  .wellness-video-card {
+    flex: 0 0 calc(100% - 28px);
+    min-width: 280px;
   }
-  
-  .wellness-nav-wrap {
-    padding: 16px 20px;
+
+  .wellness-section-header,
+  .wellness-section-header-with-arrow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Optional: slightly wider on huge monitors */
+@media (min-width: 1600px) {
+  .wellness-content-card {
+    max-width: 1400px;
+  }
+
+  .wellness-nav-bar {
+    max-width: 1400px;
   }
 }

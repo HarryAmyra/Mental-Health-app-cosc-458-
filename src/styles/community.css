@@ -1,0 +1,257 @@
+/* ============ GLOBAL RESET ============ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ============ BACKGROUND LAYERS ============ */
+
+/* Balatro canvas */
+.community-bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2; /* behind everything */
+}
+
+/* Soft swirl overlay (same vibe as wellness page) */
+.community-background-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(120, 119, 198, 0.3),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 212, 0, 0.18),
+      transparent 55%
+    );
+  z-index: -1;
+}
+
+/* ============ NAVBAR (matches wellness tools) ============ */
+
+.wellness-nav-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+}
+
+.wellness-nav-bar {
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 12px 32px;
+  display: flex;
+  gap: 42px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  max-width: 1200px;
+  width: calc(100% - 40px);
+}
+
+.wellness-nav-item {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.wellness-nav-item:hover {
+  background: #f1f5f9;
+}
+
+.wellness-nav-item-active {
+  background: #ffd93d;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(255, 217, 61, 0.4);
+}
+
+/* ============ MAIN LAYOUT / CARD ============ */
+
+/* Wrapper: centers the card and keeps spacing from edges */
+.community-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 180px;          /* space below navbar */
+  padding-left: 20px;          /* gutter so card never touches edge */
+  padding-right: 20px;
+  display: flex;
+  justify-content: center;     /* center the card horizontally */
+  align-items: flex-start;     /* keep top aligned, not vertically centered */
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Main card: big, centered, with rounded corners */
+.community-card {
+  background: rgba(255, 255, 255, 0.97);
+  width: 100%;
+  max-width: 1500px;      /* width of the card */
+  min-height: 950px;      /* height of the card */
+  margin: 0 20px 20px 280px;    /* auto left + auto right = centered */
+  border-radius: 30px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+/* ============ BANNER ============ */
+
+.community-banner {
+  background: #ffd93d;
+  height: 180px;
+  padding: 40px 60px;
+  border-radius: 30px 30px 0 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.community-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #0f172a;
+  z-index: 2;
+}
+
+/* Decorative dots */
+.dot {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.dot-lg { width: 55px; height: 55px; }
+.dot-md { width: 35px; height: 35px; }
+.dot-sm { width: 22px; height: 22px; }
+
+/* ============ CONTENT / GRID ============ */
+
+.community-content {
+  padding: 60px 80px;
+}
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.community-item {
+  background: #f1f5f9;
+  border-radius: 20px;
+  padding: 50px 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.community-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+}
+
+.community-item-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.community-item-desc {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* ============ RESPONSIVE BREAKPOINTS ============ */
+
+/* Medium screens: slightly tighter layout */
+@media (max-width: 1200px) {
+  .community-card {
+    max-width: 1300px;
+    min-height: 850px;
+  }
+
+  .community-content {
+    padding: 50px 50px;
+  }
+
+  .community-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+/* Tablets / small laptops */
+@media (max-width: 900px) {
+  .community-wrapper {
+    padding-top: 160px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .community-card {
+    margin-bottom: 40px;
+  }
+
+  .community-banner {
+    height: 150px;
+    padding: 30px 30px;
+  }
+
+  .community-title {
+    font-size: 2.4rem;
+  }
+
+  .community-content {
+    padding: 40px 30px;
+  }
+
+  .community-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .wellness-nav-bar {
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+  }
+
+  .community-banner {
+    height: auto;
+    padding: 24px 20px 40px;
+  }
+
+  .community-title {
+    font-size: 2rem;
+  }
+
+  .community-content {
+    padding: 30px 20px 40px;
+  }
+}
