@@ -1,10 +1,13 @@
 import React, { useMemo, useState, useEffect } from "react";
+import MainNav from "../components/MainNav.jsx";
+import ChatFab from "../components/ChatFab.jsx";
 import { Link } from 'react-router-dom';
 import Balatro from "./Balatro";
 
-export default function LifeAfterSportsV2({ bgUrl = "/bg/life-after-sports-bg.png" }) {
+export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
   const [activePath, setActivePath] = useState("Career switch");
   const [carouselIndex, setCarouselIndex] = useState(0);
+
   const background = useMemo(() => bgUrl, [bgUrl]);
 
   useEffect(() => {
@@ -31,6 +34,7 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/life-after-sports-bg.pn
       <div style={{ ...styles.backdrop, backgroundImage: `url(${background})` }} />
       <div style={styles.overlay} />
 
+      <MainNav />
       <header style={styles.navWrap}>
         <nav style={styles.navBar}>
           {NAV.map((label) => (
@@ -114,18 +118,21 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/life-after-sports-bg.pn
             </div>
           </section>
 
-          <footer style={styles.quickLinks}>Quick links: Resume Builder  Mock Interview  Scholarships  Alumni Groups</footer>
+          <footer style={styles.quickLinks}>Quick links: Resume Builder · Mock Interview · Scholarships · Alumni Groups</footer>
         </section>
       </main>
+
+      <ChatFab />
 
       <style>{globalCSS}</style>
     </div>
   );
 }
 
-const NAV = ["Home", "About us", "Wellness tools", "Life After Sports", "Community"];
 const PILLS = ["Career switch", "Start a business", "Finish degree", "Find purpose"];
 const CARDS = [
+  { title: "Job Board", body: "Curated roles from athlete-friendly employers." },
+  { title: "Mentorship", body: "Chat with alumni who’ve made the leap." },
   { title: "Job Board", body: "Curated roles from athlete‑friendly employers." },
   { title: "Mentorship", body: "Chat with alumni who've made the leap." },
   { title: "Courses", body: "Short upskilling tracks & certifications." },
@@ -141,19 +148,7 @@ const styles = {
   wrapper: { position: "relative", minHeight: "100vh", fontFamily: "Inter, system-ui, Arial, sans-serif" },
   backdrop: { position: "fixed", inset: 0, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 },
   overlay: { position: "fixed", inset: 0, background: "rgba(11,18,32,.12)", zIndex: 0 },
-  navWrap: { position: "relative", zIndex: 1, padding: "18px 28px" },
-  navBar: {
-    background: "#FFFFFF",
-    borderRadius: 999,
-    padding: "12px 24px",
-    display: "flex",
-    gap: 36,
-    alignItems: "center",
-    justifyContent: "center",
-    boxShadow: "0 1px 0 rgba(15,23,42,0.06) inset",
-  },
-  navItem: { color: "#0F172A", fontWeight: 800, textDecoration: "none", padding: "8px 14px", borderRadius: 999 },
-  navItemActive: { background: "#FFD400" },
+
   shell: { position: "relative", zIndex: 1, padding: "12px 24px 40px", display: "grid", placeItems: "center" },
   panel: {
     background: "#FFFFFF",
@@ -163,8 +158,10 @@ const styles = {
     maxWidth: 1150,
     boxShadow: "0 0 0 1px rgba(15,23,42,0.06)",
   },
+
   h1: { fontSize: 48, fontWeight: 800, margin: "6px 0 12px" },
   subhead: { fontSize: 20, fontWeight: 700, color: "#1F2937", opacity: 0.9, marginBottom: 18 },
+
   pillsRow: { display: "flex", gap: 22, flexWrap: "wrap" },
   pill: {
     background: "#0F172A",
@@ -179,6 +176,7 @@ const styles = {
     cursor: "pointer",
   },
   pillActive: { opacity: 1 },
+
   cardGrid: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0,1fr))", gap: 24, marginTop: 22 },
   card: {
     background: "#F4F6F9",
@@ -203,6 +201,7 @@ const styles = {
     fontWeight: 800,
     cursor: "pointer",
   },
+
   testimonialSection: { marginTop: 24 },
   testimonialHeading: { fontSize: 20, fontWeight: 800, margin: "0 0 10px" },
   testimonialBox: {
@@ -219,6 +218,7 @@ const styles = {
   dotBar: { display: "flex", gap: 8, alignItems: "center", justifyContent: "flex-end" },
   dot: { width: 8, height: 8, borderRadius: 999, background: "#CBD5E1", border: 0, cursor: "pointer" },
   dotActive: { background: "#0F172A" },
+
   quickLinks: { marginTop: 18, color: "#374151", fontWeight: 700 },
 };
 
