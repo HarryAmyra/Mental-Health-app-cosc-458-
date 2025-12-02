@@ -1,8 +1,34 @@
+// src/pages/LifeAfterSportsV2.jsx
 import React, { useMemo, useState, useEffect } from "react";
-import MainNav from "../components/MainNav.jsx";
 import ChatFab from "../components/ChatFab.jsx";
-import { Link } from 'react-router-dom';
-import Balatro from "./Balatro";
+
+const PILLS = ["Career switch", "Start a business", "Finish degree", "Find purpose"];
+
+const CARDS = [
+  { title: "Job Board", body: "Curated roles from athlete-friendly employers." },
+  { title: "Mentorship", body: "Chat with alumni who’ve made the leap." },
+  { title: "Job Board", body: "Curated roles from athlete-friendly employers." },
+  { title: "Mentorship", body: "Chat with alumni who've made the leap." },
+  { title: "Courses", body: "Short upskilling tracks & certifications." },
+  { title: "Money & Health", body: "Budgeting, benefits, and wellbeing care." },
+];
+
+const testimonials = [
+  {
+    quote:
+      "In 90 days I went from team captain to operations analyst. The mentor chats were clutch.",
+    by: "— Jordan, Track & Field",
+  },
+  {
+    quote:
+      "The resume builder translated my stats into skills recruiters understood.",
+    by: "— Maya, Basketball",
+  },
+  {
+    quote: "Having a path after my last season reduced so much stress.",
+    by: "— Chris, Soccer",
+  },
+];
 
 export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
   const [activePath, setActivePath] = useState("Career switch");
@@ -11,46 +37,23 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
   const background = useMemo(() => bgUrl, [bgUrl]);
 
   useEffect(() => {
-    const id = setInterval(() => setCarouselIndex((i) => (i + 1) % testimonials.length), 6000);
+    const id = setInterval(
+      () => setCarouselIndex((i) => (i + 1) % testimonials.length),
+      6000
+    );
     return () => clearInterval(id);
   }, []);
 
-  const getNavPath = (label) => {
-    const pathMap = {
-      "Home": "/",
-      "About us": "/about",
-      "Wellness tools": "/wellnessTools",
-      "Life After Sports": "/life-after-sports",
-      "Community": "/community"
-    };
-    return pathMap[label] || "/";
-  };
-
   return (
     <div style={styles.wrapper}>
-      {/* Animated Background */}
-      <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
-      
-      <div style={{ ...styles.backdrop, backgroundImage: `url(${background})` }} />
+      {/* Optional static background image behind panel (Balatro comes from AppLayout) */}
+      <div
+        style={{
+          ...styles.backdrop,
+          backgroundImage: `url(${background})`,
+        }}
+      />
       <div style={styles.overlay} />
-
-      <MainNav />
-      <header style={styles.navWrap}>
-        <nav style={styles.navBar}>
-          {NAV.map((label) => (
-            <Link
-              key={label}
-              to={getNavPath(label)}
-              style={{
-                ...styles.navItem,
-                ...(label === "Life After Sports" ? styles.navItemActive : {}),
-              }}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-      </header>
 
       <main style={styles.shell}>
         <section style={styles.panel}>
@@ -63,7 +66,10 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
                 key={p}
                 onClick={() => setActivePath(p)}
                 aria-pressed={activePath === p}
-                style={{ ...styles.pill, ...(activePath === p ? styles.pillActive : {}) }}
+                style={{
+                  ...styles.pill,
+                  ...(activePath === p ? styles.pillActive : {}),
+                }}
               >
                 {p}
               </button>
@@ -75,7 +81,10 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
                 key={p}
                 onClick={() => setActivePath(p)}
                 aria-pressed={activePath === p}
-                style={{ ...styles.pill, ...(activePath === p ? styles.pillActive : {}) }}
+                style={{
+                  ...styles.pill,
+                  ...(activePath === p ? styles.pillActive : {}),
+                }}
               >
                 {p}
               </button>
@@ -83,15 +92,20 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
           </div>
 
           <section style={styles.cardGrid} className="cardGrid">
-            {CARDS.map((c) => (
-              <article key={c.title} style={styles.card}>
+            {CARDS.map((c, idx) => (
+              <article key={c.title + idx} style={styles.card}>
                 <div style={styles.cardIcon} />
                 <div>
                   <h3 style={styles.cardTitle}>{c.title}</h3>
                   <p style={styles.cardBody}>{c.body}</p>
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-start" }}>
-                  <button style={styles.cardBtn} onClick={() => alert(`${c.title} (stub)`)}>Open</button>
+                  <button
+                    style={styles.cardBtn}
+                    onClick={() => alert(`${c.title} (stub)`)}
+                  >
+                    Open
+                  </button>
                 </div>
               </article>
             ))}
@@ -103,14 +117,20 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
               <p style={styles.testimonialText}>
                 <em>{testimonials[carouselIndex].quote}</em>
                 <br />
-                <span style={{ fontWeight: 700 }}> {testimonials[carouselIndex].by}</span>
+                <span style={{ fontWeight: 700 }}>
+                  {" "}
+                  {testimonials[carouselIndex].by}
+                </span>
               </p>
               <div style={styles.dotBar}>
                 {testimonials.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setCarouselIndex(i)}
-                    style={{ ...styles.dot, ...(i === carouselIndex ? styles.dotActive : {}) }}
+                    style={{
+                      ...styles.dot,
+                      ...(i === carouselIndex ? styles.dotActive : {}),
+                    }}
                     aria-label={`Show testimonial ${i + 1}`}
                   />
                 ))}
@@ -118,7 +138,10 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
             </div>
           </section>
 
-          <footer style={styles.quickLinks}>Quick links: Resume Builder · Mock Interview · Scholarships · Alumni Groups</footer>
+          <footer style={styles.quickLinks}>
+            Quick links: Resume Builder · Mock Interview · Scholarships · Alumni
+            Groups
+          </footer>
         </section>
       </main>
 
@@ -129,27 +152,33 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
   );
 }
 
-const PILLS = ["Career switch", "Start a business", "Finish degree", "Find purpose"];
-const CARDS = [
-  { title: "Job Board", body: "Curated roles from athlete-friendly employers." },
-  { title: "Mentorship", body: "Chat with alumni who’ve made the leap." },
-  { title: "Job Board", body: "Curated roles from athlete‑friendly employers." },
-  { title: "Mentorship", body: "Chat with alumni who've made the leap." },
-  { title: "Courses", body: "Short upskilling tracks & certifications." },
-  { title: "Money & Health", body: "Budgeting, benefits, and wellbeing care." },
-];
-const testimonials = [
-  { quote: "In 90 days I went from team captain to operations analyst. The mentor chats were clutch.", by: "— Jordan, Track & Field" },
-  { quote: "The resume builder translated my stats into skills recruiters understood.", by: "— Maya, Basketball" },
-  { quote: "Having a path after my last season reduced so much stress.", by: "— Chris, Soccer" },
-];
-
 const styles = {
-  wrapper: { position: "relative", minHeight: "100vh", fontFamily: "Inter, system-ui, Arial, sans-serif" },
-  backdrop: { position: "fixed", inset: 0, backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 },
-  overlay: { position: "fixed", inset: 0, background: "rgba(11,18,32,.12)", zIndex: 0 },
+  wrapper: {
+    position: "relative",
+    minHeight: "100vh",
+    fontFamily: "Inter, system-ui, Arial, sans-serif",
+  },
+  backdrop: {
+    position: "fixed",
+    inset: 0,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    zIndex: 0,
+  },
+  overlay: {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(11,18,32,.12)",
+    zIndex: 0,
+  },
 
-  shell: { position: "relative", zIndex: 1, padding: "12px 24px 40px", display: "grid", placeItems: "center" },
+  shell: {
+    position: "relative",
+    zIndex: 1,
+    padding: "12px 24px 40px",
+    display: "grid",
+    placeItems: "center",
+  },
   panel: {
     background: "#FFFFFF",
     borderRadius: 24,
@@ -160,7 +189,13 @@ const styles = {
   },
 
   h1: { fontSize: 48, fontWeight: 800, margin: "6px 0 12px" },
-  subhead: { fontSize: 20, fontWeight: 700, color: "#1F2937", opacity: 0.9, marginBottom: 18 },
+  subhead: {
+    fontSize: 20,
+    fontWeight: 700,
+    color: "#1F2937",
+    opacity: 0.9,
+    marginBottom: 18,
+  },
 
   pillsRow: { display: "flex", gap: 22, flexWrap: "wrap" },
   pill: {
@@ -177,7 +212,12 @@ const styles = {
   },
   pillActive: { opacity: 1 },
 
-  cardGrid: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0,1fr))", gap: 24, marginTop: 22 },
+  cardGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+    gap: 24,
+    marginTop: 22,
+  },
   card: {
     background: "#F4F6F9",
     border: "1px solid #E6E9EE",
@@ -215,8 +255,20 @@ const styles = {
     gap: 8,
   },
   testimonialText: { color: "#374151", fontWeight: 600, margin: 0 },
-  dotBar: { display: "flex", gap: 8, alignItems: "center", justifyContent: "flex-end" },
-  dot: { width: 8, height: 8, borderRadius: 999, background: "#CBD5E1", border: 0, cursor: "pointer" },
+  dotBar: {
+    display: "flex",
+    gap: 8,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 999,
+    background: "#CBD5E1",
+    border: 0,
+    cursor: "pointer",
+  },
   dotActive: { background: "#0F172A" },
 
   quickLinks: { marginTop: 18, color: "#374151", fontWeight: 700 },

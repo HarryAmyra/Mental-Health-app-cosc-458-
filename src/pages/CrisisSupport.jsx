@@ -1,20 +1,10 @@
+// src/pages/CrisisSupport.jsx
 import React from "react";
-import MainNav from "../components/MainNav.jsx";
 import ChatFab from "../components/ChatFab.jsx";
 
 export default function CrisisSupport() {
   return (
     <div style={styles.wrapper}>
-      <div
-        style={{
-          ...styles.backdrop,
-          backgroundImage: "url(/bg/bg.png)",
-        }}
-      />
-      <div style={styles.overlay} />
-
-      <MainNav />
-
       <main style={styles.shell}>
         <section style={styles.panel}>
           <h1 style={styles.title}>Crisis Support</h1>
@@ -63,26 +53,10 @@ export default function CrisisSupport() {
 
 const styles = {
   wrapper: {
-    position: "relative",
     minHeight: "100vh",
     fontFamily: "Inter, system-ui, Arial, sans-serif",
   },
-  backdrop: {
-    position: "fixed",
-    inset: 0,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    zIndex: 0,
-  },
-  overlay: {
-    position: "fixed",
-    inset: 0,
-    background: "rgba(11,18,32,.12)",
-    zIndex: 0,
-  },
   shell: {
-    position: "relative",
-    zIndex: 1,
     padding: "12px 24px 40px",
     display: "grid",
     placeItems: "center",
