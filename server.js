@@ -1,8 +1,12 @@
-import express from 'express';
-import { ChatOpenAI } from '@langchain/openai';
-import { HumanMessage, SystemMessage, AIMessage } from '@langchain/core/messages';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { ChatOpenAI } from "@langchain/openai";
+import {
+  HumanMessage,
+  SystemMessage,
+  AIMessage,
+} from "@langchain/core/messages";
 
 dotenv.config();
 
@@ -10,55 +14,108 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// -------------------------------
+// Model
+// -------------------------------
 const model = new ChatOpenAI({
-  openAiApiKey: process.env.OPENAI_API_KEY,
-  modelName: 'gpt-3.5-turbo',
-  temperature: 0.7,
+  openAIApiKey: process.env.OPENAI_API_KEY,
+  modelName: "gpt-5.1",
+  temperature: 0.5,
+  maxTokens: 300,
 });
 
-// System prompt for therapist persona
-const systemPrompt = `You are Anna, a compassionate and empathetic AI therapist specializing in sports psychology and athlete mental health. Your role is to:
+// -------------------------------
+// Simple Memory Store
+// -------------------------------
+// key = sessionId, value = array of messages
+const memoryStore = new Map();
 
-- Listen actively and validate the user's feelings
-- Ask thoughtful, open-ended questions to help them explore their emotions
-- Use techniques from CBT (Cognitive Behavioral Therapy) when appropriate
-- Focus on athlete-specific challenges like performance anxiety, identity beyond sports, transitions, and team dynamics
-- Never diagnose mental health conditions
-- Encourage professional help when needed
-- Keep responses concise (2-4 sentences) and conversational
-- Show warmth and understanding in every response
+// limit memory to avoid excessive context length
+const MEMORY_LIMIT = 15;
 
-Remember: You're here to support, not replace, professional mental health care.`;
+// -------------------------------
+// System Prompt
+// -------------------------------
+const systemPrompt = `
+You are Anna, a warm and empathetic mental-wellness guide for athletes.
+Your goal is to help users reflect, feel heard, and navigate challenges.
 
-app.post('/api/chat', async (req, res) => {
+Follow these rules:
+- respond in 2–4 sentences
+- validate emotions before giving guidance
+- ask one gentle question when appropriate
+- never diagnose or mention disorders
+- do not offer crisis advice or danger instructions
+- keep language simple and deeply human
+- use previous memory to stay consistent with past messages
+`;
+
+// -------------------------------
+// Chat Route
+// -------------------------------
+app.post("/api/chat", async (req, res) => {
   try {
-    const { messages } = req.body;
+    const { messages, sessionId } = req.body;
 
-    console.log('Received messages:', messages); // Debug log
+    if (!sessionId) {
+      return res.status(400).json({
+        error: "Missing sessionId. Include a unique ID for each user.",
+      });
+    }
 
-    // Convert message history to LangChain format
-    const formattedMessages = [
-      new SystemMessage(systemPrompt),
-      ...messages.map(msg => 
-        msg.type === 'user' 
+    // get existing memory or create new one
+    if (!memoryStore.has(sessionId)) {
+      memoryStore.set(sessionId, []);
+    }
+
+    const sessionMemory = memoryStore.get(sessionId);
+
+    // update memory with new messages
+    messages.forEach((msg) => {
+      sessionMemory.push(
+        msg.type === "user"
           ? new HumanMessage(msg.text)
           : new AIMessage(msg.text)
-      )
+      );
+    });
+
+    // enforce memory limit
+    while (sessionMemory.length > MEMORY_LIMIT) {
+      sessionMemory.shift(); // remove oldest message
+    }
+
+    // combine memory + system prompt
+    const conversation = [
+      new SystemMessage(systemPrompt.trim()),
+      ...sessionMemory,
     ];
 
-    const response = await model.invoke(formattedMessages);
-    
-    console.log('AI Response:', response.content); // Debug log
-    
-    res.json({ message: response.content });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Failed to get response', details: error.message });
+    const aiResponse = await model.invoke(conversation);
+
+    // save AI response to memory
+    sessionMemory.push(new AIMessage(aiResponse.content));
+
+    memoryStore.set(sessionId, sessionMemory);
+
+    return res.json({ message: aiResponse.content });
+  } catch (err) {
+    console.error("Chat error:", err);
+
+    res.status(500).json({
+      error: "Server error while generating AI response.",
+      details: err.message,
+    });
   }
 });
 
+// -------------------------------
+// Server
+// -------------------------------
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log('API Key loaded:', process.env.OPENAI_API_KEY ? '✓ Yes' : '✗ No');
+  console.log(`✓ Server running on port ${PORT}`);
+  console.log(
+    `✓ API key loaded: ${process.env.OPENAI_API_KEY ? "yes" : "no"}`
+  );
 });
+
