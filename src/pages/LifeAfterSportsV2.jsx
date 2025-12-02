@@ -1,6 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
 import MainNav from "../components/MainNav.jsx";
 import ChatFab from "../components/ChatFab.jsx";
+import { Link } from 'react-router-dom';
+import Balatro from "./Balatro";
 
 export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
   const [activePath, setActivePath] = useState("Career switch");
@@ -13,12 +15,42 @@ export default function LifeAfterSportsV2({ bgUrl = "/bg/bg.png" }) {
     return () => clearInterval(id);
   }, []);
 
+  const getNavPath = (label) => {
+    const pathMap = {
+      "Home": "/",
+      "About us": "/about",
+      "Wellness tools": "/wellnessTools",
+      "Life After Sports": "/life-after-sports",
+      "Community": "/community"
+    };
+    return pathMap[label] || "/";
+  };
+
   return (
     <div style={styles.wrapper}>
+      {/* Animated Background */}
+      <Balatro isRotate={false} mouseInteraction={true} pixelFilter={700} />
+      
       <div style={{ ...styles.backdrop, backgroundImage: `url(${background})` }} />
       <div style={styles.overlay} />
 
       <MainNav />
+      <header style={styles.navWrap}>
+        <nav style={styles.navBar}>
+          {NAV.map((label) => (
+            <Link
+              key={label}
+              to={getNavPath(label)}
+              style={{
+                ...styles.navItem,
+                ...(label === "Life After Sports" ? styles.navItemActive : {}),
+              }}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+      </header>
 
       <main style={styles.shell}>
         <section style={styles.panel}>
@@ -101,6 +133,8 @@ const PILLS = ["Career switch", "Start a business", "Finish degree", "Find purpo
 const CARDS = [
   { title: "Job Board", body: "Curated roles from athlete-friendly employers." },
   { title: "Mentorship", body: "Chat with alumni who’ve made the leap." },
+  { title: "Job Board", body: "Curated roles from athlete‑friendly employers." },
+  { title: "Mentorship", body: "Chat with alumni who've made the leap." },
   { title: "Courses", body: "Short upskilling tracks & certifications." },
   { title: "Money & Health", body: "Budgeting, benefits, and wellbeing care." },
 ];
