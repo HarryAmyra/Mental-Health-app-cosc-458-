@@ -20,6 +20,7 @@ app.use(express.json());
 const model = new ChatOpenAI({
   openAIApiKey: process.env.OPENAI_API_KEY,
   modelName: "gpt-5.1",
+
   temperature: 0.5,
   maxTokens: 300,
 });
